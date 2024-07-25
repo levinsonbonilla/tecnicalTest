@@ -18,14 +18,19 @@ class AppointmentsRepository extends ServiceEntityRepository
 
     public function getAppointmentsActives(): array
     {
-        $now = new \DateTimeImmutable();
-        return $this->createQueryBuilder('a')
-            ->select("a.id, a.dateAppointment, a.timeStart, a.timeEnd ")
-            ->andWhere('a.active = true')
-            ->andWhere('a.dateAppointment >= :date')
-            ->setParameter("date", $now)
-            ->orderBy('a.dateAppointment', 'ASC')
+        return $this->createQueryBuilder('appointment')
+            ->select("
+                appointment.id, 
+                appointment.dateAppointment, 
+                appointment.timeStart, 
+                appointment.timeEnd, 
+                speciality.name,
+                appointment.active
+            ")
+            ->join("appointment.speciality", "speciality")
+            ->andWhere('speciality.active = true')
+            ->orderBy('speciality.name', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getResult("custom_appointments_hydrator");
     }
 }

@@ -20,7 +20,7 @@ class DoctorDataRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('doctor')
             ->select("
-                doctor.id,
+                users.id,
                 users.email,
                 users.name,
                 users.lastName,

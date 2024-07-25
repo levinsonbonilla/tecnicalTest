@@ -23,13 +23,13 @@ class Appointments
     use DateFields;
 
     #[ORM\Column(type: Types::TIME_IMMUTABLE)]
-    private \DateTimeImmutable $time_start;
+    private \DateTimeImmutable $timeStart;
 
     #[ORM\Column(type: Types::TIME_IMMUTABLE)]
-    private \DateTimeImmutable $time_end;
+    private \DateTimeImmutable $timeEnd;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private \DateTimeImmutable $date_appointment;
+    private \DateTimeImmutable $dateAppointment;
 
     #[ORM\ManyToOne(inversedBy: 'appointments')]
     #[ORM\JoinColumn(nullable: false)]
@@ -48,17 +48,17 @@ class Appointments
 
     public function getTimeStart(): \DateTimeImmutable
     {
-        return $this->time_start;
+        return $this->timeStart;
     }
 
     public function getTimeEnd(): \DateTimeImmutable
     {
-        return $this->time_end;
+        return $this->timeEnd;
     }
 
     public function getDateAppointment(): \DateTimeImmutable
     {
-        return $this->date_appointment;
+        return $this->dateAppointment;
     }
 
     public function getSpeciality(): Specialities
@@ -72,5 +72,12 @@ class Appointments
     public function getUsersAppointments(): Collection
     {
         return $this->usersAppointments;
+    }
+
+    public function inactivate(): Appointments
+    {
+        $this->deactivate();
+        $this->update();
+        return $this;
     }
 }

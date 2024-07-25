@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Argument\UsersAppointmentsArgument;
 use App\Repository\UsersAppointmentsRepository;
 use App\Trait\Entity\ActiveFields;
 use App\Trait\Entity\DateFields;
@@ -52,5 +53,16 @@ class UsersAppointments
     public function isAttended(): bool
     {
         return $this->isAttended;
+    }
+
+    public function add(UsersAppointmentsArgument $argument): UsersAppointments
+    {
+        $this->activate();
+        $this->create();
+        $this->doctor = $argument->getDoctor();
+        $this->patient = $argument->getPatient();
+        $this->appointment = $argument->getAppointment();
+        $this->isAttended = $argument->getAttended();
+        return $this;
     }
 }

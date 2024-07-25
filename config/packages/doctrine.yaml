@@ -23,7 +23,9 @@ doctrine:
                 prefix: 'App\Entity'
                 alias: App
         controller_resolver:
-            auto_mapping: false
+            auto_mapping: false            
+        hydrators:
+            custom_appointments_hydrator: App\Hydrator\CustomeAppointmentsHydrator
 
 when@test:
     doctrine:
